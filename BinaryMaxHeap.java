@@ -28,27 +28,24 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		this.cmp = cmp;
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	public BinaryMaxHeap(List<? extends E> list) {
-		tree = (E[])new Object[list.size() + 1];
-		for (int i = 0; i < list.size(); i++)
-			tree[i + 1] = list.get(i);
-		size = list.size();
-		//FIGURE OUT HOW TO RUN PERCOLATE DOWN
+		buildHeap(list);
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public BinaryMaxHeap(List<? extends E> list, Comparator<? super E> cmp) {
-		tree = (E[])new Object[list.size() + 1];
 		this.cmp = cmp;
+		buildHeap(list);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void buildHeap(List<? extends E> list) {
+		tree = (E[])new Object[list.size() + 1];
 		for (int i = 0; i < list.size(); i++)
 			tree[i + 1] = list.get(i);
 		size = list.size();
 		//FIGURE OUT HOW TO RUN PERCOLATE DOWN
-	}
-	
-	private void buildHeap() {
-		
 	}
 	
 	private void percolateUp(int index) {
@@ -59,7 +56,12 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	}
 	
 	private void percolateDown(int index) {
-		
+		int biggestChildIndex = getBiggestChild(index);
+		while(isNotLeaf(index) && innerCompare(tree[index], tree[biggestChildIndex]) < 0 ) {
+			swap(index, biggestChildIndex);
+			index = biggestChildIndex;
+			biggestChildIndex = getBiggestChild(index);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -89,10 +91,16 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		return (index * 2) + 1;
 	}
 
-	private boolean isLeaf(int index) {
+	private boolean isNotLeaf(int index) {
 		if (index > (size / 2) && index <= size)
-			return true;
-		return false;
+			return false;
+		return true;
+	}
+	
+	private int getBiggestChild(int index) {
+		if (leftChild(index) == size || innerCompare(tree[leftChild(index)], tree[rightChild(index)]) > 0)
+			return leftChild(index);
+		return rightChild(index);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -145,9 +153,6 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 			throw new NoSuchElementException();
 		
 		
-		
-		
-		// NOT DONE!!
 		return null;
 	}
 
