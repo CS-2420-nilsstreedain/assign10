@@ -4,6 +4,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * @author Paul Nuffer and Nils Streedain
+ *
+ * @param <E> - the generic type of element stored in the BinaryMaxHeap
+ */
 public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	
 	private E[] tree;
@@ -12,6 +17,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	
 	private Comparator<? super E> cmp = null;
 	
+	@SuppressWarnings("unchecked")
 	public BinaryMaxHeap() {
 		tree = (E[])new Object[100];
 		size = 0;
@@ -22,28 +28,44 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		this.cmp = cmp;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public BinaryMaxHeap(List<? extends E> list) {
-		this();
-		list.sort();
-		for (int i = 1; i < tree.length; i++)
-			tree[i] = list.get(i);
-		size = tree.length;
+		tree = (E[])new Object[list.size() + 1];
+		for (int i = 0; i < list.size(); i++)
+			tree[i + 1] = list.get(i);
+		size = list.size();
+		//FIGURE OUT HOW TO RUN PERCOLATE DOWN
 	}
 
+	@SuppressWarnings("unchecked")
 	public BinaryMaxHeap(List<? extends E> list, Comparator<? super E> cmp) {
-		
+		tree = (E[])new Object[list.size() + 1];
+		this.cmp = cmp;
+		for (int i = 0; i < list.size(); i++)
+			tree[i + 1] = list.get(i);
+		size = list.size();
+		//FIGURE OUT HOW TO RUN PERCOLATE DOWN
 	}
 	
 	private void buildHeap() {
-
-	}
-	
-	private void percolateUp() {
 		
 	}
 	
-	private void percolateDown() {
+	private void percolateUp(int index) {
 		
+	}
+	
+	private void percolateDown(int index) {
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void doubleBacking() {
+		E[] treeCopy = (E[])new Object[tree.length * 2];
+		for (int i = 1; i < tree.length; i++)
+			treeCopy[i] = tree[i];
+		
+		tree = treeCopy;
 	}
 
 	/**
@@ -54,8 +76,11 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public void add(E item) {
-		// TODO Auto-generated method stub
+		if(size == tree.length - 1) 
+			doubleBacking();
 		
+		tree[++size] = item;
+		percolateUp(size);
 	}
 	
 	/**
@@ -67,8 +92,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public E peek() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		return tree[1];
 	}
 	
 	/**
@@ -90,8 +114,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 	
 	/**
@@ -100,18 +123,18 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return size == 0;
 	}
 	
 	/**
 	 * Empties this priority queue of items.
 	 * O(1)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		tree = (E[])new Object[100];
+		size = 0;
 	}
 	
 	/** 
@@ -125,6 +148,10 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}}
+		@SuppressWarnings("unchecked")
+		E[] treeCopy = (E[])new Object[tree.length - 1];
+		for (int i = 1; i < tree.length; i++)
+			treeCopy[i - 1] = tree[i];
+		return treeCopy;
+	}
+}	
