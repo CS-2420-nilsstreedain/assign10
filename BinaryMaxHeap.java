@@ -45,7 +45,9 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		for (int i = 0; i < list.size(); i++)
 			tree[i + 1] = list.get(i);
 		size = list.size();
-		//FIGURE OUT HOW TO RUN PERCOLATE DOWN
+		
+		for (int i = size / 2; i > 0; i--)
+			percolateDown(i);
 	}
 	
 	private void percolateUp(int index) {
@@ -152,8 +154,11 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		if (this.isEmpty())
 			throw new NoSuchElementException();
 		
+		E max = tree[1];
+		tree[1] = tree[size--];
+		percolateDown(1);
 		
-		return null;
+		return max;
 	}
 
 	/**
