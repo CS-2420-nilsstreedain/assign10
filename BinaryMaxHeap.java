@@ -52,7 +52,10 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	}
 	
 	private void percolateUp(int index) {
-		
+		while (index != 1 && innerCompare(tree[index], tree[parent(index)]) < 0) {
+			swap(index, parent(index));
+			index = parent(index);
+		}
 	}
 	
 	private void percolateDown(int index) {
@@ -67,7 +70,39 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 		
 		tree = treeCopy;
 	}
+	
+	private void swap(int index1, int index2) {
+		E tmp = tree[index1];
+		tree[index1] = tree[index2];
+		tree[index2] = tmp;
+	}
+	
+	private int parent(int index) {
+		return index / 2;
+	}
+	
+	private int leftChild(int index) {
+		return index * 2;
+	}
+	
+	private int rightChild(int index) {
+		return (index * 2) + 1;
+	}
 
+	private boolean isLeaf(int index) {
+		if (index > (size / 2) && index <= size)
+			return true;
+		return false;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private int innerCompare(E element1, E element2) {
+		if (cmp == null)
+			return ((Comparable<? super E>)element1).compareTo(element2);
+
+		return cmp.compare(element1, element2);
+	}
+	
 	/**
 	 * Adds the given item to this priority queue.
 	 * O(1) in the average case, O(log N) in the worst case
@@ -92,6 +127,8 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public E peek() throws NoSuchElementException {
+		if (this.isEmpty())
+			throw new NoSuchElementException();
 		return tree[1];
 	}
 	
@@ -104,7 +141,13 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public E extractMax() throws NoSuchElementException {
-		// TODO Auto-generated method stub
+		if (this.isEmpty())
+			throw new NoSuchElementException();
+		
+		
+		
+		
+		// NOT DONE!!
 		return null;
 	}
 
