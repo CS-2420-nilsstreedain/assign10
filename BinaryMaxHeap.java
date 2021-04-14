@@ -60,9 +60,9 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	private void percolateDown(int index) {
 		int biggestChildIndex = getBiggestChild(index);
 		while(isNotLeaf(index) && innerCompare(tree[index], tree[biggestChildIndex]) < 0 ) {
+			biggestChildIndex = getBiggestChild(index);
 			swap(index, biggestChildIndex);
 			index = biggestChildIndex;
-			biggestChildIndex = getBiggestChild(index);
 		}
 	}
 	
@@ -94,7 +94,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	}
 
 	private boolean isNotLeaf(int index) {
-		if (index > (size / 2) && index <= size)
+		if (index >= (size / 2) && index <= size)
 			return false;
 		return true;
 	}
@@ -107,9 +107,11 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	
 	@SuppressWarnings("unchecked")
 	private int innerCompare(E element1, E element2) {
-		if (cmp == null)
+		if (cmp == null) {
+		
 			return ((Comparable<? super E>)element1).compareTo(element2);
-
+		}
+		
 		return cmp.compare(element1, element2);
 	}
 	
@@ -202,9 +204,24 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	@Override
 	public Object[] toArray() {
 		@SuppressWarnings("unchecked")
-		E[] treeCopy = (E[])new Object[tree.length - 1];
-		for (int i = 1; i < tree.length; i++)
+		E[] treeCopy = (E[])new Object[size];
+		for (int i = 1; i <= size; i++)
 			treeCopy[i - 1] = tree[i];
 		return treeCopy;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		int end = 1;
+		for (int i = 1; i <= size; i++) {
+			result.append(tree[i]);
+			result.append(" ");
+			if (i == end) {
+				result.append("\n");
+				end = end * 2 + 1;
+			}
+		}
+		return result.toString();
 	}
 }	
