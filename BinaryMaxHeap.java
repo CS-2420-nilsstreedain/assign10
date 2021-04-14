@@ -51,19 +51,37 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	}
 	
 	private void percolateUp(int index) {
-		while (index != 1 && innerCompare(tree[index], tree[parent(index)]) < 0) {
+		while (index > 1 && innerCompare(tree[index], tree[parent(index)]) > 0) {
 			swap(index, parent(index));
 			index = parent(index);
 		}
+		
+//		E temp = tree[index];
+//		while (index > 1 && innerCompare(temp, tree[parent(index)]) > 0) {
+//			tree[index] = tree[parent(index)];
+//			index = parent(index);
+//		}
+//		tree[index] = temp;
 	}
 	
 	private void percolateDown(int index) {
 		int biggestChildIndex = getBiggestChild(index);
-		while(isNotLeaf(index) && innerCompare(tree[index], tree[biggestChildIndex]) < 0 ) {
+		while(leftChild(index) <= size && innerCompare(tree[index], tree[biggestChildIndex]) < 0 ) {
 			biggestChildIndex = getBiggestChild(index);
 			swap(index, biggestChildIndex);
 			index = biggestChildIndex;
 		}
+
+//		while(leftChild(index) <= size) {
+//			int biggestChildIndex = getBiggestChild(index);
+//			
+//			if (innerCompare(tree[index], tree[biggestChildIndex]) < 0)
+//				swap(index, biggestChildIndex);
+//			else
+//				break;
+//			
+//			index = biggestChildIndex;
+//		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -92,12 +110,6 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	private int rightChild(int index) {
 		return (index * 2) + 1;
 	}
-
-	private boolean isNotLeaf(int index) {
-		if (index >= (size / 2) && index <= size)
-			return false;
-		return true;
-	}
 	
 	private int getBiggestChild(int index) {
 		if (leftChild(index) == size || innerCompare(tree[leftChild(index)], tree[rightChild(index)]) > 0)
@@ -123,7 +135,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public void add(E item) {
-		if(size == tree.length - 1) 
+		if (size == tree.length - 1) 
 			doubleBacking();
 		
 		tree[++size] = item;
