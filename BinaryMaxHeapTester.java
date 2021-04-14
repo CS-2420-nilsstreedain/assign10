@@ -105,7 +105,6 @@ class BinaryMaxHeapTester {
 	
 	@Test
 	void testExtractMax() {
-		negativeInts.add(1);
 		for (int i = 0; i < 1000; i++)
 			negativeInts.extractMax();
 		negativeInts.add(1);
@@ -151,4 +150,15 @@ class BinaryMaxHeapTester {
 		assertTrue(negativeInts.isEmpty());
 	}
 
+	@Test
+	void bigAddAndExtractMax() {
+		emptyInts.add(5);
+		emptyInts.add(1);
+		emptyInts.add(3);
+		emptyInts.add(4);
+		emptyInts.add(2);
+		
+		assertEquals(emptyInts.extractMax(), 5);
+		assertArrayEquals(new Object[] {4, 2, 3, 1}, emptyInts.toArray());
+	}
 }
