@@ -84,7 +84,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 * @param index - index of element to be percolated up
 	 */
 	private void percolateUp(int index) {
-		// Checks that the element at index is greater thatn the element at the parent
+		// Checks that the element at index is greater than the element at the parent
 		// index, meaning a swap is valid
 		while (index > 1 && innerCompare(tree[index], tree[parent(index)]) > 0) {
 			swap(index, parent(index));
@@ -116,7 +116,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 			else
 				break;
 
-			// Index's biggest child is then used for the next itteration
+			// Index's biggest child is then used for the next iteration
 			index = biggestChildIndex;
 		}
 
@@ -222,11 +222,11 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@SuppressWarnings("unchecked")
 	private int innerCompare(E element1, E element2) {
-		// If no comparitor is provided, natural ordering is used
+		// If no comparator is provided, natural ordering is used
 		if (cmp == null)
 			return ((Comparable<? super E>) element1).compareTo(element2);
 
-		// Otherwise, the provided comparitor is used
+		// Otherwise, the provided comparator is used
 		return cmp.compare(element1, element2);
 	}
 
@@ -266,7 +266,7 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 	 */
 	@Override
 	public E extractMax() throws NoSuchElementException {
-		// Thorws an exception if the BinaryMaxHeap is empty
+		// Throws an exception if the BinaryMaxHeap is empty
 		if (this.isEmpty())
 			throw new NoSuchElementException();
 
