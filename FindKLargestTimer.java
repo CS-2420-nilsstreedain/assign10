@@ -3,18 +3,22 @@ package assign10;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class FindKLargestEfficiency {
+/**
+ * Simple timer class for evaluating the efficiency of the FindKLargest class.
+ * 
+ * @author Paul Nuffer & Nils Streedain
+ *
+ */
+public class FindKLargestTimer {
 	public static void main(String[] args) {
 		Random rng = new Random();
 		System.out.println("N\tnanoTime");
-		
-		
-		
+
 		int incr = 5000;
 		for (int probSize = 5000; probSize <= 100000; probSize += incr) {
 
 			int timesToLoop = 1000;
-			
+
 			int k = 5000;
 
 			ArrayList<Integer> input = new ArrayList<>();
@@ -24,7 +28,8 @@ public class FindKLargestEfficiency {
 			// First, spin computing stuff until one second has gone by.
 			// This allows this thread to stabilize.
 			long stopTime, midpointTime, startTime = System.nanoTime();
-			while (System.nanoTime() - startTime < 1000000000) {}
+			while (System.nanoTime() - startTime < 1000000000) {
+			}
 
 			startTime = System.nanoTime();
 			for (int i = 0; i < timesToLoop; i++) {
@@ -37,7 +42,7 @@ public class FindKLargestEfficiency {
 			// Capture the cost of running the loop and any other operations done
 			// above that are not the essential method call being timed.
 			for (int i = 0; i < timesToLoop; i++) {
-			
+
 			}
 
 			stopTime = System.nanoTime();

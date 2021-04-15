@@ -2,11 +2,17 @@ package assign10;
 
 import java.util.Random;
 
-public class BinaryMaxHeapEfficiency {
+/**
+ * Simple timer class for evaluating the efficiency of the BinaryMaxHeap class.
+ * 
+ * @author Paul Nuffer & Nils Streedain
+ *
+ */
+public class BinaryMaxHeapTimer {
 	public static void main(String[] args) {
 		Random rng = new Random();
 		System.out.println("N\tnanoTime");
-		
+
 		int incr = 200000;
 		for (int probSize = 200000; probSize <= 10000000; probSize += incr) {
 
@@ -19,7 +25,8 @@ public class BinaryMaxHeapEfficiency {
 			// First, spin computing stuff until one second has gone by.
 			// This allows this thread to stabilize.
 			long stopTime, midpointTime, startTime = System.nanoTime();
-			while (System.nanoTime() - startTime < 1000000000) {}
+			while (System.nanoTime() - startTime < 1000000000) {
+			}
 
 			startTime = System.nanoTime();
 			for (int i = 0; i < timesToLoop; i++) {

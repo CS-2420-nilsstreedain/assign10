@@ -90,13 +90,6 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 			swap(index, parent(index));
 			index = parent(index);
 		}
-
-//		E temp = tree[index];
-//		while (index > 1 && innerCompare(temp, tree[parent(index)]) > 0) {
-//			tree[index] = tree[parent(index)];
-//			index = parent(index);
-//		}
-//		tree[index] = temp;
 	}
 
 	/**
@@ -119,13 +112,6 @@ public class BinaryMaxHeap<E> implements PriorityQueue<E> {
 			// Index's biggest child is then used for the next iteration
 			index = biggestChildIndex;
 		}
-
-//		int biggestChildIndex = getBiggestChild(index);
-//		while(leftChild(index) <= size && innerCompare(tree[index], tree[biggestChildIndex]) < 0 ) {
-//			biggestChildIndex = getBiggestChild(index);
-//			swap(index, biggestChildIndex);
-//			index = biggestChildIndex;
-//		}
 	}
 
 	/**
