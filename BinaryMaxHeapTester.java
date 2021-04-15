@@ -161,4 +161,64 @@ class BinaryMaxHeapTester {
 		assertEquals(emptyInts.extractMax(), 5);
 		assertArrayEquals(new Object[] {4, 2, 3, 1}, emptyInts.toArray());
 	}
+	
+	@Test
+	void testFullKthLargestHeap() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(5);
+		ints.add(1);
+		ints.add(3);
+		ints.add(4);
+		ints.add(2);
+		
+		ArrayList<Integer> sorted = (ArrayList<Integer>) FindKLargest.findKLargestHeap(ints, 5);
+		
+		assertEquals(5, sorted.remove(0));
+		assertArrayEquals(new Object[] {4, 3, 2, 1}, sorted.toArray());
+	}
+	
+	@Test
+	void testFullKthLargestHeapReverseCmp() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(5);
+		ints.add(1);
+		ints.add(3);
+		ints.add(4);
+		ints.add(2);
+		
+		ArrayList<Integer> sorted = (ArrayList<Integer>) FindKLargest.findKLargestHeap(ints, 5, (o1, o2) -> (o2 - o1));
+		
+		assertEquals(1, sorted.remove(0));
+		assertArrayEquals(new Object[] {2, 3, 4, 5}, sorted.toArray());
+	}
+	
+	@Test
+	void testFullKthLargestSort() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(5);
+		ints.add(1);
+		ints.add(3);
+		ints.add(4);
+		ints.add(2);
+		
+		ArrayList<Integer> sorted = (ArrayList<Integer>) FindKLargest.findKLargestSort(ints, 5);
+		
+		assertEquals(5, sorted.remove(0));
+		assertArrayEquals(new Object[] {4, 3, 2, 1}, sorted.toArray());
+	}
+	
+	@Test
+	void testFullKthLargestSortReverseCmp() {
+		ArrayList<Integer> ints = new ArrayList<>();
+		ints.add(5);
+		ints.add(1);
+		ints.add(3);
+		ints.add(4);
+		ints.add(2);
+		
+		ArrayList<Integer> sorted = (ArrayList<Integer>) FindKLargest.findKLargestSort(ints, 5, (o1, o2) -> (o2 - o1));
+		
+		assertEquals(1, sorted.remove(0));
+		assertArrayEquals(new Object[] {2, 3, 4, 5}, sorted.toArray());
+	}
 }
